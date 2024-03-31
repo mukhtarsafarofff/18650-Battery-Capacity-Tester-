@@ -1,0 +1,177 @@
+#include<JC_Button.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+#define OLED_RESET     4 // Reset pin # (or -1 if sharing Arduino reset pin)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+
+const float Low_BAT_level = 3.0;
+//Current steps with a 3R load (R7)
+const int Current [] = {0,110,210,300,390,490,580,680,770,870,960,1000};
+const byte PWM_Pin = 10;
+const byte Buzzer = 9;
+const int BAT_Pin = A0;
+int PWM_Value = 0;
+unsigned long Capacity = 0;
+int ADC_Value = 0;
+float Vcc = 4.96 ; // Voltage of Arduino 5V pin ( Mesured by Multimeter )
+float BAT_Voltage = 0;
+float sample =0;
+byte Hour = 0, Minute = 0, Second = 0;
+bool calc = false, Done = false;
+Button UP_Button(2, 25, false, true);
+Button Down_Button(3, 25, false, true);
+
+
+void setup () {
+//
+Serial.begin(9600);
+pinMode(PWM_Pin, OUTPUT);
+pinMode(Buzzer, OUTPUT);
+analogWrite(PWM_Pin, PWM_Value);
+UP_Button.begin();
+Down_Button.begin();
+display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+display.clearDisplay();
+display.setTextColor(WHITE); 
+display.setTextSize(1);
+display.setCursor(12,25);
+display.print("Open Green Energy");
+display.display();  
+delay(3000);
+display.clearDisplay();
+display.setTextSize(2);
+display.setCursor(2,15);
+display.print("Adj Curr:"); 
+display.setCursor(2,40);
+display.print("UP/Down:");
+display.print("0");
+display.display();  
+}
+
+// Setup function 
+
+void loop() {
+  UP_Button.read();
+  Down_Button.read();
+if (UP_Button.wasReleased() && PWM_Value < 55 && calc == false)
+ {
+  PWM_Value = PWM_Value + 5; 
+  analogWrite(PWM_Pin,PWM_Value);
+
+
+  
+  display.clearDisplay();
+  display.setCursor(2,25);
+  display.print("Curr:");   
+  display.print(String(Current[PWM_Value / 5])+"mA");
+  display.display();  
+//  Serial.println(String(Current[PWM_Value / 5]));
+ }
+if (Down_Button.wasReleased() && PWM_Value > 1 && calc == false)
+{ 
+  PWM_Value = PWM_Value - 5; 
+  analogWrite(PWM_Pin,PWM_Value); 
+  display.clearDisplay();
+  display.setCursor(2,25);
+  display.print("Curr:");   
+  display.print(String(Current[PWM_Value / 5])+"mA");
+  display.display();  
+ // Serial.println(String(Current[PWM_Value / 5]) + "mA");
+  
+} 
+
+if (UP_Button.pressedFor (1000) && calc == false)
+{
+  digitalWrite(Buzzer, HIGH);
+  delay(100);
+  digitalWrite(Buzzer, LOW);
+  display.clearDisplay();
+  timerInterrupt(); 
+   
+  }
+}
+
+//  Loop function 
+void timerInterrupt(){
+  calc = true;
+  while (Done == false)  {
+     Second ++;
+    if (Second == 60)  {
+      Second = 0;
+      Minute ++;      
+    }
+    if (Minute == 60)  {
+      Minute = 0;
+      Hour ++;
+    }
+
+ //Measuring Battery Voltage
+  
+  for(int i=0;i< 100;i++)
+  {
+   sample=sample+analogRead(BAT_Pin); //read the Battery voltage 
+   delay (2);
+  }
+  sample=sample/100; 
+  BAT_Voltage = sample * Vcc/ 1024.0; 
+ 
+//oled display features
+
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(20,5);
+    display.print(String(Hour) + ":" + String(Minute) + ":" + String(Second));
+
+    display.setTextSize(1);
+    display.setCursor(0,25);
+    display.print("Disch Curr: ");   
+    display.print(String(Current[PWM_Value / 5])+"mA");
+     
+    
+    display.setCursor(2,40);   
+    display.print("Bat Volt:" + String(BAT_Voltage)+"V" );
+
+
+
+    Capacity =  (Hour * 3600) + (Minute * 60) + Second;
+    Capacity = (Capacity * Current[PWM_Value / 5]) / 3600;
+    display.setCursor(2, 55);
+    display.print("Capacity:" + String(Capacity) + "mAh");
+    display.display();
+
+    
+    if (BAT_Voltage < Low_BAT_level)
+    {
+      Capacity =  (Hour * 3600) + (Minute * 60) + Second;
+      Capacity = (Capacity * Current[PWM_Value / 5]) / 3600;
+      display.clearDisplay(); 
+      display.setTextSize(2);      
+      display.setCursor(2,15);     
+      display.print("Capacity:");
+      display.setCursor(2,40);  
+      display.print(String(Capacity) + "mAh");
+      display.display();
+      Done = true;
+      PWM_Value = 0;
+      analogWrite(PWM_Pin, PWM_Value);
+      digitalWrite(Buzzer, HIGH);
+      delay(100);
+      digitalWrite(Buzzer, LOW);
+      delay(100);
+      digitalWrite(Buzzer, HIGH);
+      delay(100);
+      digitalWrite(Buzzer, LOW);
+      delay(100);
+    }
+       delay(1000);
+  } 
+   
+}
+
+
+
