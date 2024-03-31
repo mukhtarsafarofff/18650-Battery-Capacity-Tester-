@@ -8,6 +8,7 @@ The theory is based on the voltage comparison of the inverting (pin-2) and the n
 To test the circuit, i use  18650 battery and i have connected the battery to the battery terminal. Now set the current to according to your requirement and long-pressed the “UP” button. Then you should hear a beep and the test procedure starts. During the test, you will monitor all the parameters on the OLED display. The battery will discharge until its voltage reaches its low-level threshold (3.2V). The test process will be finished by two long beeps.
 
 Heutzutage ist es schwierig, die Kapazität von 18650-Batterien zu ermitteln, und beim Kauf ist es wirklich schwierig, zwischen einer echten und einer gefälschten Batterie zu unterscheiden. Der gesamte Schaltplan ist in die folgenden Abschnitte unterteilt:
+
 1.Konstantstrom-Lastkreis
 2.Stromkreis zur Messung der Batteriespannung
 3.Benutzerschnittstellenschaltung
