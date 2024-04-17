@@ -13,3 +13,4 @@ Abschnitte unterteilt:
 2)Batteriespannungsmesskreis
 3)Benutzerschnittstellenkreis
 4)Summerkreis
+Die Batteriespannung wird über den Arduino-Analogeingangspin A0 gemessen. Zwei Kondensatoren C1 und C2 werden verwendet, um die von der konstanten Stromlastschaltung kommenden Störungen zu filtern, die die ADC-Konversionsleistung beeinträchtigen können.
