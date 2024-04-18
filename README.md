@@ -16,4 +16,4 @@ Heutzutage ist es schwierig zu wissen, welche Kapazität in 18650-Batterien erha
 3)Benutzerschnittstellenkreis
 4)Summer-Schaltung
 
-Die Stromversorgungsschaltung besteht aus einer Gleichstrombuchse (7-9V) und zwei Filterkondensatoren C1 und C2. Die Leistungsausgabe (Vin) ist mit dem Arduino-Pin Vin verbunden. Hier verwende ich den eingebauten Spannungsregler des Arduino, um die Spannung auf 5V zu reduzieren. 
+Die Stromversorgungsschaltung besteht aus einer Gleichstrombuchse (7-9V) und zwei Filterkondensatoren C1 und C2. Die Leistungsausgabe (Vin) ist mit dem Arduino-Pin Vin verbunden. Hier verwende ich den eingebauten Spannungsregler des Arduino, um die Spannung auf 5V zu reduzieren. Die Hauptkomponente der Konstantstromlastschaltung ist der LM358-IC. LM358 ist ein Doppelverstärker in einem einzigen Gehäuse.Dieser Operationsverstärker, R3 und der MOSFET bilden eine Konstantstromlastschaltung.Wenn wir die Spannung am nicht invertierenden Eingangspin einstellen, schaltet der Operationsverstärker den MOSFET ein und versucht, die gleiche Spannung über dem R3 zu erhalten.  
