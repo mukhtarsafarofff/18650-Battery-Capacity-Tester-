@@ -12,9 +12,9 @@ The theory is based on the voltage comparison of the inverting (pin-2) and the n
 To test the circuit, i use  18650 battery and i have connected the battery to the battery terminal. Now set the current to according to your requirement and long-pressed the “UP” button. Then you should hear a beep and the test procedure starts. During the test, you will monitor all the parameters on the OLED display. The battery will discharge until its voltage reaches its low-level threshold (3.2V). The test process will be finished by two long beeps.
 
 Heutzutage ist es schwierig zu wissen, welche Kapazität in 18650-Batterien erhalten ist, und wenn wir kaufen, ist es wirklich schwer, zwischen einer echten und einer gefälschten Batterie zu unterscheiden. Das gesamte Schaltbild ist in folgende Abschnitte unterteilt:
-1)Konstanter Stromlastkreis
+1)Konstantstromlastschaltung
 2)Batteriespannungsmesskreis
 3)Benutzerschnittstellenkreis
-4)Summerkreis
+4)Summer-Schaltung
 
 Die Batteriespannung wird über den Arduino-Analogeingangspin A0 gemessen. Zwei Kondensatoren C1 und C2 werden verwendet, um die von der konstanten Stromlastschaltung kommenden Störungen zu filtern, die die ADC-Konversionsleistung beeinträchtigen können.Die Theorie basiert auf dem Spannungsvergleich der invertierenden (Pin-2) und nicht-invertierenden (Pin-3) Eingänge des OpAmps, der als Einheitsverstärker konfiguriert ist. Wenn ich die Spannung am nicht-invertierenden Eingang durch Anpassen des PWM-Signals einstelle, öffnet der Ausgang des Operationsverstärkers das Tor des MOSFET.Wenn der MOSFET eingeschaltet wird, fließt der Strom durch R5, was eine Spannungsabnahme erzeugt, die dem Operationsverstärker eine negative Rückkopplung bietet.Es steuert den MOSFET so, dass die Spannungen an seinen invertierenden und nicht-invertierenden Eingängen gleich sind.
