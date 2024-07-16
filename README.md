@@ -1,8 +1,4 @@
 (ENG)  Nowadays it is difficult to know the capacity retained in 18650 batteries and when we are buying , it is really difficult to distinguish between a real and fake battery .The whole schematic is divided into to followings sections:
-1. Constant Current Load Circuit
-2. Battery Voltage Measurement Circuit
-3. User Interface Circuit
-4. Buzzer Circuit
 
 The power supply circuit consists of a DC Jack ( 7-9V) and two filter capacitors C1 and C2. The power output (Vin) is connected to the Arduino pin Vin. Here I am using the Arduino on-board voltage regulator to step down the voltage to 5V.
 The main component of constant current load circuit is LM358 IC.LM358 is a dual amplifier in a single package.
