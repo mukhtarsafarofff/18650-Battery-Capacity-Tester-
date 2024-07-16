@@ -2,7 +2,7 @@
 1. Constant Current Load Circuit
 2. Battery Voltage Measurement Circuit
 3. User Interface Circuit
-
+4. Buzzer Circuit
 
 
 
