@@ -15,7 +15,6 @@ The discharge current can be adjusted by pressing the Up and Down Button. The ti
 
 (DEU)  Heutzutage ist es schwierig zu wissen, welche Kapazität in 18650-Batterien erhalten ist, und wenn wir kaufen, ist es wirklich schwer, zwischen einer echten und einer gefälschten Batterie zu unterscheiden. Das gesamte Schaltbild ist in folgende Abschnitte unterteilt:
 1)Konstantstromlastschaltung
-
 2)Batteriespannungsmesskreis
 3)Benutzerschnittstellenkreis
 4)Summer-Schaltung
